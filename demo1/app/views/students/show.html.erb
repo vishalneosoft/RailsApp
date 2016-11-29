@@ -1,0 +1,46 @@
+<h1>Student Detail</h1>
+<p>
+<strong>First Name:</strong>
+<%= @student.first_name %>
+</p>
+<p>
+<strong>Last Name:</strong>
+<%= @student.last_name %>
+</p>
+<p>
+<strong>Grade:</strong>
+<%= @student.grade %>
+</p>
+<h2>Comments</h2>
+<% @student.comments.each do |t| %>
+<p>
+	<strong>Name:</strong>
+	<%= t.professor_name %>
+</p>
+<p>
+	<strong>Comment:</strong>
+	<%= t.comments %>
+</p>
+<p>
+<p>
+  <%= link_to 'Destroy Comment', [t.student, t],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+</p>
+<% end %>
+
+<h2>Add a comment</h2>
+<%= form_for([ @student, @student.comments.build]) do |f| %>
+<p>
+	Professor Name: <%= f.text_field :professor_name %>
+</p>
+<p>
+	Comment: <%= f.text_area :comments %>
+</p>
+<p>
+	<%= f.submit %>
+</p>
+<% end %>
+
+<%= link_to 'Edit student detail', edit_student_path(@student) %>&nbsp
+<%= link_to 'List of all student', students_path %>

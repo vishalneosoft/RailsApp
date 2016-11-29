@@ -1,0 +1,27 @@
+<h1>New Student</h1>
+<%= form_for @student do |t| %>
+<% if @student.errors.any? %>
+	<div id="error_message">
+	<h2><%= pluralize(@student.errors.count,'error') %> Prohibited this details from being saved:
+	</h2>
+	<ol>
+		<% @student.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+		<% end %>
+	</ol>
+	</div>
+<% end %>
+<p>
+	FirstName: <%= t.text_field :first_name %>
+</p>
+<p>
+	LastName: <%= t.text_field :last_name %>
+</p>
+<p>
+	Grade: <%= t.text_field :grade %>
+</p>
+<p>
+	<%= t.submit %>
+</p>
+<% end %>
+<%= link_to 'Show All Students', students_path %>
