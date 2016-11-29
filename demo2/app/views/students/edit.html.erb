@@ -1,0 +1,43 @@
+<h1>Student</h1>
+<%= form_for @student do |f| %>
+
+<% if @student.errors.any? %>
+	<div id="error_message">
+	<h2><%= pluralize(@student.errors.count,'error') %> Prohibited this details from being saved:
+	</h2>
+	<ul>
+		<% @student.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+		<% end %>
+	</ul>
+	</div>
+<% end %>
+<p>
+	<%= f.label :Student_Name %>
+	<%= f.text_field :student_name %>
+</p>
+<p>
+	<%= f.label :Age %>
+	<%= f.number_field :Age %>
+</p>
+<p>
+	<%= f.label :email %>
+	<%= f.email_field :email %>
+</p>
+<p>
+	<%= f.label :email_confirmation %>
+	<%= f.email_field :email_confirmation %>
+</p>
+<p>
+	<%= f.label :pincode %>
+	<%= f.text_field :pincode %>
+</p>
+<p>
+	<%= f.check_box :terms_of_service %>
+	Accept terms and condition
+</p>
+
+<p>
+	<%= f.submit %>
+</p>
+<% end %>
