@@ -1,0 +1,106 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+.name{
+  color: blue;
+  size: 18px;
+}
+.center {
+  text-align: center;
+}
+
+.center h1 {
+  margin-bottom: 10px;
+}
+
+.metro {
+  padding-left: 120px;
+}
+
+.make {
+  padding-left: 230px;
+}
+
+.pad{
+  padding-top: 20px;
+}
+
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+}
+h5 {
+  text-align: center;
+}
+
+.twit{
+  size: 18px;
+  color: #fff;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  padding-top: 15px;
+  font-weight: bold;
+}
+
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.home {
+	width: 33%;
+	margin-left: 400px;
+}
+.home1 {
+  width: 40%;
+  margin-left: 400px;
+}
+
+.image-align{
+  align: 'middle'
+}
+.user.btn-default:hover{
+  background-color: #5bc0de;
+}
+
+.count {
+  background-color: #bce8f1;
+  color: black;
+  padding: 1px 6px;
+  text-align: center;
+  text-decoration: none;
+}

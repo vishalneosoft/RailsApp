@@ -1,0 +1,71 @@
+<div class="col-sm-3">
+  <div class = "panel panel-info">
+    <div class = "panel-heading">
+      <% if @user.id == current_user.id %>
+      <h4>Your Twitter Profile</h4>
+      <% else %>
+      <h4><%= @user.name.capitalize %> Twitter Profile</h4>
+      <% end %>
+      </div>
+      <div class = "panel-body">
+      <br>
+        <% if current_user.avatar.url.present? %>
+        <%= image_tag(@user.avatar.url(:thumb), class: 'img-rounded') %>
+        <% else %>
+        <%= image_tag('default.png',size: '100x100',class: 'img-rounded') %>
+        <% end %>
+        <h4><span class="name"><%= @user.name.capitalize %></span> @<%= @user.username %></h4>
+        <br>
+        <table class = "table table-bordered">
+          <tr>
+            <td><%= link_to 'Tweets' ,post_path(@user) %></td>
+            <td><%= link_to 'Followers',followers_user_path(@user) %></td>
+            <td><%= link_to 'Following',following_user_path(@user) %></td>
+          </tr>
+            <tr class = "success">
+            <td><%= @user.posts.size %></td>
+            <td><%= @user.followers.count%></td>
+            <td><%= @user.following.count%></td>
+          </tr>
+        </table>
+    </div>
+    </div>
+</div>
+<div class="col-sm-7">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4>Retweet</h4>
+    </div>
+    <div class="panel-body">
+      <span class="name"><%= link_to @retweet.user.name.capitalize, user_path(@retweet.user) %></span> 
+        @<%= @retweet.user.username %> 
+        <span class="time"><%= time_ago_in_words(@retweet.created_at) %></span>
+        <br>
+        <h4>&nbsp<%= @retweet.content %></h4>
+        <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+            <span class="name"><%= link_to @post.user.name.capitalize, user_path(@post.user) %></span> 
+            @<%= @retweet.user.username %> 
+            <span class="time"><%= time_ago_in_words(@post.created_at) %></span>
+            <br>
+            <h4>&nbsp<%= @post.content %></h4>
+            </div>
+          </div>
+        <%= link_to(new_retweet_path(id: @retweet)) do %>
+          <i class="glyphicon glyphicon-retweet" style="color:blue"></i>
+          <span style="color:blue">Retweet</span>
+        <% end %>&nbsp
+        <%= link_to(new_post_comment_path(@retweet)) do %>
+        <i class="glyphicon glyphicon-comment" style="color:green"></i> 
+        <span style="color:green">Comment</span>
+        <% end %>&nbsp
+        <% if @post.user_id == current_user.id %>
+        <%= link_to post_path(@retweet), method: :delete, data: {confirm: "Are you sure?"}, remote: true do %>
+          <i class="glyphicon glyphicon-trash" style="color:red"></i>
+          <span style="color:red">Delete</span>
+        <% end %>
+        <% end %>
+    </div>
+  </div>
+</div>

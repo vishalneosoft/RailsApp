@@ -1,0 +1,43 @@
+<div class="panel panel-info field home">
+<div class="panel-heading">    
+    <div class="panel-title">Sign In</div>
+</div>
+<div style="padding-top: 30px" class="panel-body">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do   |f| %>
+  <%= devise_error_messages! %>
+
+  <div style="margin-bottom: 25px" class="input-group">
+      <span class="input-group-addon"></span>
+      <%= f.text_field :name,class: 'form-control',placeholder: 'Name', autofocus: true %>
+  </div>
+  <div style="margin-bottom: 25px" class="input-group">
+      <span class="input-group-addon"></span>
+      <%= f.text_field :username,class: 'form-control',placeholder: 'Username', autofocus: true %>
+    </div>
+
+  <div style="margin-bottom: 25px" class="input-group">
+      <span class="input-group-addon"></span>
+      <%= f.email_field :email,id: "login-username",class: 'form-control',placeholder: 'Email', autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password,class: 'form-control', autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation,class: 'form-control', autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+</div>
+</div>

@@ -1,0 +1,18 @@
+<div class="col-sm-4 col-sm-offset-4">
+<span class="name"><%= @post.user.name.capitalize %></span> 
+    @<%= @post.user.username %> 
+    <span class="time"><%= time_ago_in_words(@post.created_at) %></span>
+    <br>
+    <p><%= @post.content %></p>
+<br>
+<p>
+<%= form_for @message do |f| %>
+    <%= f.text_area :content, size: "46x8" %>
+    <br>
+    <br>
+    <%= f.submit "Retweet", class: 'btn btn-primary form-control' %>
+<% end %>
+<br>
+<%= link_to 'Cancel', post_path(current_user) %>
+</p>
+</div>

@@ -1,0 +1,71 @@
+<% if current_user %>
+<div class="col-sm-3">
+  <div class = "panel panel-info">
+    <div class = "panel-heading">
+      <% if @user.id == current_user.id %>
+      <h4>Your Twitter Profile</h4>
+      <% else %>
+      <h4><%= @user.name.capitalize %> Twitter Profile</h4>
+      <% end %>
+      </div>
+      <div class = "panel-body">
+      <br>
+        <% if current_user.avatar.url.present? %>
+        <%= image_tag(@user.avatar.url(:thumb), class: 'img-rounded') %>
+        <% else %>
+        <%= image_tag('default.png',size: '100x100',class: 'img-rounded') %>
+        <% end %>
+        <h4><span class="name"><%= @user.name.capitalize %></span> @<%= @user.username %></h4>
+        <br>
+        <table class = "table table-bordered">
+          <tr>
+            <td><%= link_to 'Tweets' ,post_path(@user) %></td>
+            <td><%= link_to 'Followers',followers_user_path(@user) %></td>
+            <td><%= link_to 'Following',following_user_path(@user) %></td>
+          </tr>
+            <tr class = "success">
+            <td><%= @user.posts.size %></td>
+            <td><%= @user.followers.count%></td>
+            <td><%= @user.following.count%></td>
+          </tr>
+        </table>
+        <%= render :partial => '/components/follow_button' %>
+    </div>
+    </div>
+</div>
+<div class="col-sm-7">
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4>Post</h4>
+  </div>
+  <div class="panel-body">
+    <span class="name"><%= link_to @post.user.name.capitalize, user_path(@post.user) %></span> 
+        @<%= @post.user.username %> 
+        <span class="time"><%= time_ago_in_words(@post.created_at) %></span>
+        <br>
+        
+        <h4>&nbsp<%= @post.content %></h4>
+        
+        &nbsp<%= link_to 'retweet', new_retweet_path(id: @post),class: "glyphicon glyphicon-retweet" %>&nbsp
+        <% if @post.user_id == current_user.id %>
+        &nbsp<%= link_to 'delete', post_path(@post), :method => :delete, data: {confirm: "Are you sure?"}, remote: true,class: "glyphicon glyphicon-trash"  %>
+        <% end %></p>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4>Add Comment</h4>
+  </div>
+  <div class="panel-body">
+    <%= form_for([@post,@post.comments.build]) do |f| %>
+        <%= f.text_area :body, size: "80x5",style: 'border-radius: 10px;' %>
+        <br><br>
+        <%= f.submit "Comment", class: 'btn btn-primary' %>
+    <% end %>
+    <br>
+    <% if @post.comments.present? %>
+        <button class="btn btn-success"><%= link_to 'Show Comments', post_comments_path(@post) %><% end %></button> &nbsp 
+  </div>
+</div>
+</div>
+<% end %>

@@ -1,0 +1,26 @@
+
+<div class="col-sm-6 col-sm-offset-3">
+<div class="panel panel-info">
+<div class="panel-heading">
+  <h4>Retweet</h4>
+</div>
+<div class="panel-body">
+<span class="name"><%= @post_user.user.name.capitalize %></span> 
+    @<%= @post_user.user.username %> 
+    <span class="time"><%= time_ago_in_words(@post_user.created_at) %></span>
+    <br>
+    <h4><%= @post_user.content %></h4>
+<br>
+<p>
+<%= form_for @post do |f| %>
+    <%= f.text_area :content, size: "70x5",style: 'border-radius: 10px;' %>
+    <br>
+    <br>
+    <%= f.submit "Retweet", class: 'btn btn-primary' %>
+<% end %>
+<br>
+<button class="btn btn-default"><%= link_to 'Cancel', post_path(current_user) %></button>
+</p>
+</div>
+</div>
+</div>
