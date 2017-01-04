@@ -1,19 +1,16 @@
 class RetweetsController < ApplicationController
 
   def show
-    @user = User.find(current_user.id)
     @retweet = Post.find(params[:id])
     @post = Post.find(@retweet.retweet_id)
   end
 
   def new
-    @user = User.find(current_user.id)
     @post = Post.find(params[:id])
     @retweet = @post.retweets.build
   end
 
   def create
-    @user = User.find(current_user.id)
     @post = Post.find(params[:id])
     @retweet = @post.retweets.build(retweet_params)
     if @retweet.save
@@ -26,7 +23,7 @@ class RetweetsController < ApplicationController
   private
 
   def retweet_params
-    params.require(:post).permit(:retweet_id, :content).merge(user_id: current_user.id)
+    params.require(:post).permit(:retweet_id, :content, :avatar).merge(user_id: current_user.id)
   end
   
 end

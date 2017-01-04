@@ -1,25 +1,21 @@
 class CommentsController < ApplicationController
 
   def index
-    @user = User.find(current_user.id)
     @post = Post.find(params[:post_id])
     @comments = Comment.all
   end
 
   def new
-    @user = User.find(current_user.id)
     @post = Post.find(params[:post_id])
     @comment = Comment.new
   end
 
   def show
-    @user = User.find(current_user.id)
     @post = Post.find(params[:post_id])
     @comments = Comment.all
   end
 
   def create
-    @user = User.find(current_user.id)
     @post = Post.find(params[:post_id])
     @comment = @post.comments.new(comment_params)
     @comment.user_id = current_user.id

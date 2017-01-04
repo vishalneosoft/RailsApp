@@ -25,20 +25,19 @@ class PostsController < ApplicationController
   		end
 	end
 
-	def retweet
-		@post_user = Post.find(params[:id])
-		@post = Post.new
-	end
+  def images
+    @posts = Post.all
+  end
 
 	def destroy
 		@user = User.find(current_user.id)
-   		@post = @user.posts.find(params[:id])
-    	@post.destroy
-    	redirect_to post_path(current_user)
-    end
+   	@post = @user.posts.find(params[:id])
+    @post.destroy
+    redirect_to post_path(current_user)
+  end
 	
 	private
 	def post_params
-		params.require(:post).permit(:content)
+		params.require(:post).permit(:content,:avatar)
 	end
 end

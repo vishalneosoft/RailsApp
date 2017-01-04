@@ -6,7 +6,7 @@
 		<div class = "panel-body">
 			<button type="button" class="btn btn-block btn-default user"><%= link_to 'Users',users_path %></button><br>
   			<button type="button" class="btn btn-block btn-default user"><%= link_to 'Posts',posts_path %></button><br>
-  			<button type="button" class="btn btn-block btn-default user">Images</button>
+  			<button type="button" class="btn btn-block btn-default user"><%= link_to 'Images', images_posts_path %></button>
 		</div>
 	</div>
 </div>
@@ -20,8 +20,10 @@
     <%= form_for @post do |f| %>
         <%= f.text_area :content, size: "80x5",style: 'border-radius: 10px;' %>
         <br><br>
+        <%= f.file_field :avatar %>
+        <%= f.hidden_field :avatar_cache %>
+        <br>
         <%= f.submit "Tweet", class: 'btn btn-primary' %>
-        <%= f.submit "Upload Image", class: 'btn btn-default' %>
     <% end %>
     </div>
   </div>
@@ -35,7 +37,7 @@
 			<tr>
 			<td style="padding-left: 20px">
 				<% if current_user.avatar.url.present? %>
-        			<%= image_tag(user.avatar.url(:small), class: 'img-rounded') %>
+        			<%= image_tag(user.avatar.url,style: "height: 80px;width:100px;border: 1px solid black" ,class: 'img-rounded') %>
         		<% else %>
         			<%= image_tag('default.png',size: '100x100',class: 'img-rounded') %>
         		<% end %>

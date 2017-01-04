@@ -6,7 +6,7 @@
         <div class = "panel-body">
             <button type="button" class="btn btn-block btn-default user"><%= link_to 'Users',users_path %></button><br>
             <button type="button" class="btn btn-block btn-default user"><%= link_to 'Posts',posts_path %></button><br>
-            <button type="button" class="btn btn-block btn-default user">Images</button>
+            <button type="button" class="btn btn-block btn-default user"><%= link_to 'Images', images_posts_path %></button>
         </div>
     </div>
 </div>
@@ -20,8 +20,10 @@
     <%= form_for @post do |f| %>
         <%= f.text_area :content, size: "80x5",style: 'border-radius: 10px;' %>
         <br><br>
+        <%= f.file_field :avatar %>
+        <%= f.hidden_field :avatar_cache %>
+        <br>
         <%= f.submit "Tweet", class: 'btn btn-primary' %>
-        <%= f.submit "Upload Image", class: 'btn btn-default' %>
     <% end %>
     </div>
 </div>
@@ -38,6 +40,9 @@
         <br>
         
         <h4>&nbsp<%= post.content %></h4>
+        <% if post.avatar.url.present? %>
+        <p><%= image_tag(post.avatar.url,style: 'width: 300px;height: 200px;margin-top: 10px;margin-left: 10px;margin-bottom: 14px;', class: 'img-rounded') %></p>
+        <% end %>
         <% if post.retweet_id.present? %>
             <% @retweet = Post.find(post.retweet_id) %>
             <br>
@@ -48,18 +53,33 @@
                 <span class="time"><%= time_ago_in_words(@retweet.created_at) %></span>
                 <br>
                 <h4>&nbsp<%= @retweet.content %></h4>
+                <% if @retweet.avatar.url.present? %>
+                <p><%= image_tag(@retweet.avatar.url,style: 'width: 150px;height: 80px;margin-top: 10px;margin-left: 10px;margin-bottom: 14px;', class: 'img-rounded') %></p>
+                <% end %>
                 </div>
             </div>
         <% end %>
         <% if post.retweets.present? %>
-        &nbsp<%= post.retweets.count %>
+        <span class="count"><%= post.retweets.count %></span>
         <% end %>
-        &nbsp<%= link_to 'retweet', new_retweet_path(id: post),class: "glyphicon glyphicon-retweet" %>&nbsp
+        <%= link_to(new_retweet_path(id: post)) do %>
+          <i class="glyphicon glyphicon-retweet" style="color:blue"></i>
+          <span style="color:blue">Retweet</span>
+        <% end %>
+        &nbsp
         <% if post.comments.present? %>
-        <%= link_to post.comments.count, post_comments_path(post) %><% end %> <%= link_to 'comment', new_post_comment_path(post),class: "glyphicon glyphicon-comment" %>&nbsp 
+        <%= link_to post.comments.count, post_comments_path(post),class: "count",style: "text-decoration: none" %><% end %> 
+        <%= link_to(new_post_comment_path(post)) do %>
+        <i class="glyphicon glyphicon-comment" style="color:green"></i> 
+        <span style="color:green">Comment</span>
+        <% end %> 
         <% if post.user_id == current_user.id %>
-        &nbsp<%= link_to 'delete', post_path(post), :method => :delete, data: {confirm: "Are you sure?"}, remote: true,class: "glyphicon glyphicon-trash"  %>
-        <% end %></p>
+        &nbsp
+        <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure?"}, remote: true do %>
+          <i class="glyphicon glyphicon-trash" style="color:red"></i>
+          <span style="color:red">Delete</span>
+        <% end %>
+        <% end %>
         <hr>
         </div>
     <% end %>

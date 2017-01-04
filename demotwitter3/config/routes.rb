@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :relationships
 
   resources :posts do
-    get 'retweet', on: :member
+    get 'images', on: :collection
     resources :comments
   end
   resources :retweets

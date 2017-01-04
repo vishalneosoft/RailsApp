@@ -1,0 +1,21 @@
+<div class="col-sm-3">
+  <div class = "panel panel-info">
+    <div class = "panel-heading">
+      <h4>Links</h4>
+    </div>
+    <div class = "panel-body">
+      <button type="button" class="btn btn-block btn-default user"><%= link_to 'Users',users_path %></button><br>
+        <button type="button" class="btn btn-block btn-default user"><%= link_to 'Posts',posts_path %></button><br>
+        <button type="button" class="btn btn-block btn-default user"><%= link_to 'Images', images_posts_path %></button>
+    </div>
+  </div>
+</div>
+<div class="col-sm-9">
+  <% @posts.each do |post| %>
+    <% if post.avatar.present? %>
+      <div class="col-sm-3 well" style="margin-left: 20px">
+        <%= image_tag post.avatar,style: "height: 120px;width: 170px" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
