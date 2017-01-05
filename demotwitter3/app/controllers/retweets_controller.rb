@@ -8,13 +8,21 @@ class RetweetsController < ApplicationController
   def new
     @post = Post.find(params[:id])
     @retweet = @post.retweets.build
+    respond_to do |format|
+      format.html
+      format.js
+    end    
   end
 
   def create
     @post = Post.find(params[:id])
     @retweet = @post.retweets.build(retweet_params)
+    @posts = Post.all
     if @retweet.save
-      redirect_to retweet_path(@retweet)
+      respond_to do |format|
+        format.html { redirect_to retweet_path(@retweet) }
+        format.js 
+      end
     else
       render 'new'
     end

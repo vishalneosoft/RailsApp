@@ -1,0 +1,3 @@
+$('#retweet-<%= @post.id %>').slideUp(350);
+$('#retweets').html('');
+$("#retweets").html("<%= j (render 'retweets/index') %>");

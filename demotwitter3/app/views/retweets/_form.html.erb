@@ -1,0 +1,5 @@
+<%= form_for @retweet, url: retweets_path(id: @post.id),remote: true do |f| %>
+  <%= f.text_area :content, size: "80x5",style: 'border-radius: 10px;' %>
+  <br><br>
+  <%= f.submit "Retweet", class: 'btn btn-primary' %>
+<% end %>

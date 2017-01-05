@@ -62,7 +62,7 @@
     </div>
     <div class = "panel-body">
     <% @user.posts.each do |post| %>
-        <div id="show-post">
+        <div id="show-post-#{post.id}">
         <span class="name"><%= @user.name.capitalize %></span> 
         @<%= @user.username %> 
         <span class="time"><%= time_ago_in_words(post.created_at) %></span>

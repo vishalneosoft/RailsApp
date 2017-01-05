@@ -1,0 +1,52 @@
+<% @posts.each do |post| %>
+  <div id="show-post-timeline">
+    <span class="name"><%= link_to post.user.name.capitalize, user_path(post.user) %></span> 
+    @<%= post.user.username %> 
+    <span class="time"><%= time_ago_in_words(post.created_at) %></span>
+    <br>
+    <h4>&nbsp<%= post.content %></h4>
+    <% if post.avatar.url.present? %>
+      <p><%= image_tag(post.avatar.url,style: 'border: 1px solid black;width: 300px;height: 200px;margin-top: 10px;margin-left: 10px;margin-bottom: 14px;', class: 'img-rounded') %></p>
+    <% end %>
+    <% if post.retweet_id.present? %>
+      <% @retweet = Post.find(post.retweet_id) %>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <span class="name"><%= link_to @retweet.user.name.capitalize, user_path(@retweet.user) %></span> 
+          @<%= @retweet.user.username %> 
+          <span class="time"><%= time_ago_in_words(@retweet.created_at) %></span>
+          <br>
+          <h4>&nbsp<%= @retweet.content %></h4>
+          <% if @retweet.avatar.url.present? %>
+            <p><%= image_tag(@retweet.avatar.url,style: 'border: 1px solid black;width: 150px;height: 80px;margin-top: 10px;margin-left: 10px;margin-bottom: 14px;', class: 'img-rounded') %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <div id="retweet-<%= post.id %>">
+    <% if post.retweets.present? %>
+      <span class="count"><%= post.retweets.count %></span>
+    <% end %>
+    <%= link_to(new_retweet_path(id: post),remote: true) do %>
+      <i class="glyphicon glyphicon-retweet" style="color:blue"></i>
+      <span style="color:blue">Retweet</span>
+    <% end %>
+    &nbsp
+    <% if post.comments.present? %>
+      <%= link_to post.comments.count, post_comments_path(post),class: "count",style: "text-decoration: none" %><% end %> 
+      <%= link_to(new_post_comment_path(post)) do %>
+      <i class="glyphicon glyphicon-comment" style="color:green"></i> 
+      <span style="color:green">Comment</span>
+    <% end %>
+    <% if post.user_id == current_user.id %>
+      &nbsp
+      <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure?"}, remote: true do %>
+      <i class="glyphicon glyphicon-trash" style="color:red"></i>
+      <span style="color:red">Delete</span>
+    <% end %>
+  <% end %>
+  </div>
+  <hr>
+  </div>
+<% end %>

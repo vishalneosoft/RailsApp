@@ -7,8 +7,8 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<h5 class="notice"><%= notice %></h5>
-<h5 class="alert"><%= alert%></h5>
+<h5 class="notice"></h5>
+<h5 class="alert"></h5>
 
 <header class="navbar navbar-fixed-top navbar-inverse">
       <div class="container logo">
@@ -46,8 +46,20 @@
         </nav>
       </div>
     </header>
+    <% if user_signed_in? %>
     <div class="container">
+      <% flash.each do |key, value| %>
+      <div class="alert alert-success"><%= value %></div>
+      <% end %>
       <%= yield %>
     </div>
+    <% else %>
+    <div class="container">
+      <% flash.each do |key, value| %>
+      <div class="alert alert-danger"><%= value %></div>
+      <% end %>
+      <%= yield %>
+    </div>
+    <% end %>
 </body>
 </html>
