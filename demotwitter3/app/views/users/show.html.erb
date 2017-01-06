@@ -10,7 +10,7 @@
     	</div>
     	<div class = "panel-body">
     	<br>
-        <% if current_user.avatar.url.present? %>
+        <% if @user.avatar.url.present? %>
         <%= image_tag(@user.avatar.url(:thumb), class: 'img-rounded') %>
         <% else %>
         <%= image_tag('default.png',size: '100x100',class: 'img-rounded') %>
@@ -60,6 +60,7 @@
     <h3><%= @user.name.capitalize %> Tweet</h3>
     <% end %>
     </div>
+    <% if @user.posts.present? %>
     <div class = "panel-body">
     <% @user.posts.each do |post| %>
         <div id="show-post">
@@ -111,7 +112,12 @@
         <hr>
         </div>
     <% end %>
-</div>
+    </div>
+    <% else %>
+    <div class="panel-body">
+        <h1>Zero Tweet</h1>
+    </div>
+    <% end %>
 </div>
 <% end %>
 

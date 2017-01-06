@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   		if @post.save
       		redirect_to user_path(current_user) 
   		else
-      		flash[:error] = "Problem!"
+      		flash[:error] = "Empty Tweet!"
       		redirect_to user_path(current_user)
   		end
 	end

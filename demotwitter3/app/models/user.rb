@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, :omniauth_providers => [:facebook,:google_oauth2,:twitter]
+  devise :omniauthable, :omniauth_providers => [:facebook]
   validates :username, presence: true, uniqueness: true
   has_many :posts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",foreign_key: "follower_id",
