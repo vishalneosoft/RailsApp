@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, :omniauth_providers => [:facebook]
+  devise :omniauthable, :omniauth_providers => [:facebook,:google_oauth2,:twitter]
   validates :username, presence: true, uniqueness: true
   has_many :posts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",foreign_key: "follower_id",
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
       user.name = auth.info.name
-      user.username = auth.info.name
+      user.username = auth.info.name + rand(0..100).to_s
       user.image = auth.info.image
         # assuming the user model has a name
         # assuming the user model has an image

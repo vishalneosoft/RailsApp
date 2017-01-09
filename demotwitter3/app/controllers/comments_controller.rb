@@ -21,6 +21,7 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     if @comment.save
       redirect_to post_comments_path
+      #redirect_to '/posts/:post_id/comments'
     else
       render 'new'
     end

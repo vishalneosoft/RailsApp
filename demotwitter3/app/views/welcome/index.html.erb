@@ -42,7 +42,7 @@
     <br>
     <div class = "panel-body">
     <%= form_for @post, html: { multipart: true } do |f| %>
-        <%= f.text_area :content, size: "80x5",style: 'border-radius: 10px;' %>
+        <%= f.text_area :content,style: 'border-radius: 10px;',class: 'form-control' %>
         <br><br>
         <%= f.file_field :avatar %>
         <%= f.hidden_field :avatar_cache %>
