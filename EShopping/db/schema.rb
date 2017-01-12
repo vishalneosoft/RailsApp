@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111154947) do
+ActiveRecord::Schema.define(version: 20170112152455) do
 
   create_table "banners", force: :cascade do |t|
     t.string   "title"
@@ -20,6 +20,42 @@ ActiveRecord::Schema.define(version: 20170111154947) do
     t.datetime "updated_at", null: false
     t.string   "avatar"
     t.text     "content"
+  end
+
+  create_table "brand_categories", force: :cascade do |t|
+    t.integer  "brand_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "brand_categories", ["brand_id"], name: "index_brand_categories_on_brand_id"
+  add_index "brand_categories", ["category_id"], name: "index_brand_categories_on_category_id"
+
+  create_table "brands", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "status",      default: false
+    t.integer  "category_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name"
+    t.string   "sku"
+    t.string   "short_description"
+    t.text     "long_description"
+    t.float    "price"
+    t.boolean  "status",            default: false
+    t.integer  "quantity"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "users", force: :cascade do |t|
