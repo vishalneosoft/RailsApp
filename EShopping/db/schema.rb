@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112152455) do
+ActiveRecord::Schema.define(version: 20170113145740) do
 
   create_table "banners", force: :cascade do |t|
     t.string   "title"
@@ -40,11 +40,21 @@ ActiveRecord::Schema.define(version: 20170112152455) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.boolean  "status",      default: false
-    t.integer  "category_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "status",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
+
+  create_table "pictures", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "avatar"
+  end
+
+  add_index "pictures", ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable_type_and_imageable_id"
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -57,6 +67,15 @@ ActiveRecord::Schema.define(version: 20170112152455) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "sub_categories", ["category_id"], name: "index_sub_categories_on_category_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
