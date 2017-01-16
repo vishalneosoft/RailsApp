@@ -10,6 +10,12 @@ class BrandsController < ApplicationController
   # GET /brands/1
   # GET /brands/1.json
   def show
+    @categories = Category.all.where(parent_id: nil)
+    @category = Category.find(params[:category_id])
+    @brand = Brand.find(params[:id])
+    @sub_category = @category.sub_categories
+    @subcategory = @brand.categories.where('parent_id is not null')
+    @subcategories = @sub_category & @subcategory
   end
 
   # GET /brands/new

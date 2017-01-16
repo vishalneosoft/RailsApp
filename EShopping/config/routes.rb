@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :sub_categories
-  resources :brands
-  resources :brand_categories
+  resources :categories do 
+    resources :brands
+  end
   resources :products
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }

@@ -10,6 +10,9 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @categories = Category.all.where(parent_id: nil)
+    @category = Category.find(params[:id])
+    @subcategories = @category.sub_categories
   end
 
   # GET /categories/new
