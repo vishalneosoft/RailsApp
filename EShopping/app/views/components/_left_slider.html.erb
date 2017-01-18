@@ -16,11 +16,11 @@
           </h4>
         </div>
         <% if category.brands.present? %>
-          <div id="<%= category.id %>" class="panel-collapse collapse">
+          <div id="<%= category.id %>" class="<%= collapse_css(@category, category) %>">
             <div class="panel-body">
               <ul>
                 <% category.brands.each do |brand| %>
-                  <li>
+                  <li class="<%= "brand" if current_page?category_brand_path(brand,category_id: category) %>">
                     <%= link_to category_brand_path(brand,category_id: category) do %>
                       <%= brand.name %>
                     <% end %>

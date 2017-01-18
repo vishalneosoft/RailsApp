@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170116081107) do
+ActiveRecord::Schema.define(version: 20170117112805) do
 
   create_table "banners", force: :cascade do |t|
     t.string   "title"
@@ -57,6 +57,16 @@ ActiveRecord::Schema.define(version: 20170116081107) do
 
   add_index "pictures", ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable_type_and_imageable_id"
 
+  create_table "product_categories", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "product_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "product_categories", ["category_id"], name: "index_product_categories_on_category_id"
+  add_index "product_categories", ["product_id"], name: "index_product_categories_on_product_id"
+
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "sku"
@@ -67,7 +77,10 @@ ActiveRecord::Schema.define(version: 20170116081107) do
     t.integer  "quantity"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "brand_id"
   end
+
+  add_index "products", ["brand_id"], name: "index_products_on_brand_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false

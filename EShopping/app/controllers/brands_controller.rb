@@ -16,6 +16,13 @@ class BrandsController < ApplicationController
     @sub_category = @category.sub_categories
     @subcategory = @brand.categories.where('parent_id is not null')
     @subcategories = @sub_category & @subcategory
+    @sub = if(params[:sub_category])
+            @brand.categories.find(params[:sub_category])
+          elsif @subcategory.present?
+            @subcategory.last
+          else
+            ''
+          end
   end
 
   # GET /brands/new
