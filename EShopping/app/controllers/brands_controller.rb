@@ -11,6 +11,7 @@ class BrandsController < ApplicationController
   # GET /brands/1.json
   def show
     @categories = Category.all.where(parent_id: nil)
+    @brands = Brand.all
     @category = Category.find(params[:category_id])
     @brand = Brand.find(params[:id])
     @sub_category = @category.sub_categories
@@ -18,10 +19,8 @@ class BrandsController < ApplicationController
     @subcategories = @sub_category & @subcategory
     @sub = if(params[:sub_category])
             @brand.categories.find(params[:sub_category])
-          elsif @subcategory.present?
+          else @subcategory.present?
             @subcategory.last
-          else
-            ''
           end
   end
 
