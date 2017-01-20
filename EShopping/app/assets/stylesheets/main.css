@@ -926,6 +926,16 @@ h2.title {
   margin-bottom: 25px;
 }
 
+.add-one-cart {
+  background:#FE980F;
+  border: 0 none;
+  border-radius: 0;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
 .product-overlay .add-to-cart:hover {
   background:#fff;
   color: #FE980F;
@@ -1627,7 +1637,7 @@ h2.title {
 
 .cart_product {
   display: block;
-  margin: 15px -40px 10px 20px;
+  margin: 15px -40px 10px 5px;
 }
 
 .cart_quantity_button a {

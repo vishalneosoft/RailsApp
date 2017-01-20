@@ -25,20 +25,27 @@ class CartItemsController < ApplicationController
   # POST /cart_items
   # POST /cart_items.json
   def create
+    @product = Product.find(params[:product_id])
     @cart_item = CartItem.where(product_id: params[:product_id],user_id: current_user.id).first
-    if @cart_item.present?
-      @cart_item.quantity += 1 
-    else
-      @cart_item = CartItem.new(product_id: params[:product_id],user_id: current_user.id)
-    end
-    respond_to do |format|
-      if @cart_item.save
-        format.html { redirect_to :back }
-        format.json { render :show, status: :created, location: @cart_item }
+    if @product.quantity>0
+      if @cart_item.present?
+        @cart_item.quantity += 1 
       else
-        format.html { render :new }
-        format.json { render json: @cart_item.errors, status: :unprocessable_entity }
+        @cart_item = CartItem.new(product_id: params[:product_id],user_id: current_user.id)
       end
+      respond_to do |format|
+        if @cart_item.save
+          @product.quantity -= 1 
+          @product.save
+          format.html { redirect_to :back, notice: 'Item added to cart successfully' }
+          format.json { render :show, status: :created, location: @cart_item }
+        else
+          format.html { render :new }
+          format.json { render json: @cart_item.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      redirect_to :back, alert: 'Product you have purchased exceeded limit!' 
     end
   end
 
@@ -47,7 +54,7 @@ class CartItemsController < ApplicationController
   def update
     respond_to do |format|
       if @cart_item.update(cart_item_params)
-        format.html { redirect_to @cart_item, notice: 'Cart item was successfully updated.' }
+        format.html { redirect_to @cart_item, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @cart_item }
       else
         format.html { render :edit }
@@ -59,9 +66,12 @@ class CartItemsController < ApplicationController
   # DELETE /cart_items/1
   # DELETE /cart_items/1.json
   def destroy
+    @product = Product.find(@cart_item.product_id)
+    @product.quantity += @cart_item.quantity
+    @product.save
     @cart_item.destroy
     respond_to do |format|
-      format.html { redirect_to cart_items_url, notice: 'Cart item was successfully destroyed.' }
+      format.html { redirect_to cart_items_url, notice: 'Item was successfully removed!' }
       format.json { head :no_content }
     end
   end
