@@ -1,14 +1,23 @@
 /*price range*/
 
- $('#sl2').slider();
-
 	var RGBChange = function() {
 	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
 	};	
-		
-/*scroll to top*/
 
 $(document).ready(function(){
+  $(document).on("change",".cart_quantity_input",function() {
+    var x= $(this).val();
+    debugger
+    if(x<0 || x>10)
+      {
+        alert("Product limit exceeded");
+      }
+    else
+      {
+        alert($(this).val());
+      }
+  });
+
 	$(function () {
 		$.scrollUp({
 	        scrollName: 'scrollUp', // Element ID

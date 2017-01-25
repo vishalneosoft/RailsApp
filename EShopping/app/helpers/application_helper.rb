@@ -7,4 +7,12 @@ module ApplicationHelper
       "panel-collapse collapse"
     end
   end
+
+  def quantity_css(user, product)
+    if user.cart_items.find_by(product_id: product).present?
+      user.cart_items.find_by(product_id: product).quantity
+    else
+      1
+    end
+  end
 end

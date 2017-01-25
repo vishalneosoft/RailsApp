@@ -25,17 +25,21 @@ class CartItemsController < ApplicationController
   # POST /cart_items
   # POST /cart_items.json
   def create
+    quantity = 1
+    if params[:product_show].present?
+      quantity = params[:cart_item][:quantity].to_i
+    end
     @product = Product.find(params[:product_id])
     @cart_item = CartItem.where(product_id: params[:product_id],user_id: current_user.id).first
     if @product.quantity>0
       if @cart_item.present?
-        @cart_item.quantity += 1 
+        @cart_item.quantity += quantity 
       else
-        @cart_item = CartItem.new(product_id: params[:product_id],user_id: current_user.id)
+        @cart_item = CartItem.new(quantity: quantity,product_id: params[:product_id],user_id: current_user.id)
       end
       respond_to do |format|
         if @cart_item.save
-          @product.quantity -= 1 
+          @product.quantity -= quantity 
           @product.save
           format.html { redirect_to :back, notice: 'Item added to cart successfully' }
           format.json { render :show, status: :created, location: @cart_item }
@@ -52,10 +56,35 @@ class CartItemsController < ApplicationController
   # PATCH/PUT /cart_items/1
   # PATCH/PUT /cart_items/1.json
   def update
+    @cart_total = 0
+    @product = Product.find(params[:product_id])
+    @cart_item = CartItem.find(params[:id])
+    if params[:quantity_update] == "plus" && @product.quantity > 0
+      @cart_item.quantity +=1
+      @product.quantity -=1
+    elsif params[:quantity_update] == "minus" && @cart_item.quantity > 1
+      @cart_item.quantity -=1
+      @product.quantity +=1
+    elsif params[:cart_item][:quantity].present? && @product.quantity >= 0 && @cart_item.quantity > 0
+      if params[:cart_item][:quantity].to_i > @cart_item.quantity
+        product_quantity = params[:cart_item][:quantity].to_i - @cart_item.quantity
+        @cart_item.quantity = params[:cart_item][:quantity].to_i
+        @product.quantity -= product_quantity
+      elsif params[:cart_item][:quantity].to_i < @cart_item.quantity
+        product_quantity = @cart_item.quantity - params[:cart_item][:quantity].to_i
+        @cart_item.quantity = params[:cart_item][:quantity].to_i
+        @product.quantity += product_quantity
+      end
+    end
     respond_to do |format|
-      if @cart_item.update(cart_item_params)
-        format.html { redirect_to @cart_item, notice: 'Item was successfully updated.' }
+      if @cart_item.save
+        @product.save
+        current_user.cart_items.each do |item|
+          @cart_total += item.quantity * item.product.price
+        end
+        format.html { redirect_to :back, notice: 'Item successfully updated.' }
         format.json { render :show, status: :ok, location: @cart_item }
+        format.js 
       else
         format.html { render :edit }
         format.json { render json: @cart_item.errors, status: :unprocessable_entity }
@@ -63,6 +92,8 @@ class CartItemsController < ApplicationController
     end
   end
 
+  def update_quantity
+  end
   # DELETE /cart_items/1
   # DELETE /cart_items/1.json
   def destroy

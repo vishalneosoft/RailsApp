@@ -1228,7 +1228,7 @@ h2.title {
   border: 1px solid #F7F7F0;
   overflow: hidden;
   padding-bottom: 60px;
-  padding-left: 60px;
+  padding-left: 40px;
   padding-top: 60px;
   position: relative;
 }
@@ -1645,7 +1645,6 @@ h2.title {
   color: #696763;
   display: inline-block;
   font-size: 16px;
-  height: 28px;
   overflow: hidden;
   text-align: center;
   width: 35px;
@@ -1657,6 +1656,8 @@ h2.title {
   color: #696763;
   float: left;
   font-size: 16px;
+  height: 36px;
+  border-radius: 4px;
   text-align: center;
   font-family: 'Roboto',sans-serif;
   
@@ -2533,11 +2534,13 @@ h2.title {
 .signup-seperator {
   position: absolute;
   left: 50%;
-  background-color: #fff;
+  background-color: #FE980F;
   top: 50%;
   z-index: 1;
   padding: 7px;
-  margin: -10px 0 0 -145px;
+  border: 10px solid #fff;
+  margin: -10px 0 0 -155px;
+  border-radius: 30px;
 }
 
 .signin-other {

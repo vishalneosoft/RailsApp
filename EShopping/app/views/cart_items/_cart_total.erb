@@ -1,0 +1,11 @@
+<div class="total_area">
+  <ul>
+    <li>Cart Sub Total <span>&#8377; <%= @cart_total %></span></li>
+    <% cart_tax=(0.15)*@cart_total %>
+    <li>Service Tax <span>&#8377; <%= cart_tax %></span></li>
+    <li>Shipping Cost <span>Free</span></li>
+    <li>Total <span>&#8377; <%= @cart_total+cart_tax %></span></li>
+  </ul>
+    <a class="btn btn-default update" href="">Update</a>
+    <a class="btn btn-default check_out" href="">Check Out</a>
+</div>
