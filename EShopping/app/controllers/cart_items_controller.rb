@@ -41,8 +41,10 @@ class CartItemsController < ApplicationController
         if @cart_item.save
           @product.quantity -= quantity 
           @product.save
+          @cart_items = current_user.cart_items.all
           format.html { redirect_to :back, notice: 'Item added to cart successfully' }
           format.json { render :show, status: :created, location: @cart_item }
+          format.js
         else
           format.html { render :new }
           format.json { render json: @cart_item.errors, status: :unprocessable_entity }
@@ -65,14 +67,14 @@ class CartItemsController < ApplicationController
     elsif params[:quantity_update] == "minus" && @cart_item.quantity > 1
       @cart_item.quantity -=1
       @product.quantity +=1
-    elsif params[:cart_item][:quantity].present? && @product.quantity >= 0 && @cart_item.quantity > 0
-      if params[:cart_item][:quantity].to_i > @cart_item.quantity
-        product_quantity = params[:cart_item][:quantity].to_i - @cart_item.quantity
-        @cart_item.quantity = params[:cart_item][:quantity].to_i
+    elsif params[:quantity].present?
+      if params[:quantity].to_i > @cart_item.quantity
+        product_quantity = params[:quantity].to_i - @cart_item.quantity
+        @cart_item.quantity = params[:quantity].to_i
         @product.quantity -= product_quantity
-      elsif params[:cart_item][:quantity].to_i < @cart_item.quantity
-        product_quantity = @cart_item.quantity - params[:cart_item][:quantity].to_i
-        @cart_item.quantity = params[:cart_item][:quantity].to_i
+      elsif params[:quantity].to_i < @cart_item.quantity
+        product_quantity = @cart_item.quantity - params[:quantity].to_i
+        @cart_item.quantity = params[:quantity].to_i
         @product.quantity += product_quantity
       end
     end
@@ -101,9 +103,15 @@ class CartItemsController < ApplicationController
     @product.quantity += @cart_item.quantity
     @product.save
     @cart_item.destroy
+    @cart_items = current_user.cart_items.all
+    @cart_total = 0
+    @cart_items.each do |item|
+      @cart_total += item.quantity * item.product.price
+    end
     respond_to do |format|
       format.html { redirect_to cart_items_url, notice: 'Item was successfully removed!' }
       format.json { head :no_content }
+      format.js
     end
   end
 

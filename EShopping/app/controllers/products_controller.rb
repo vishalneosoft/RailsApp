@@ -11,6 +11,8 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @product=Product.find(params[:id])
+    @categories = Category.all.where(parent_id: nil)
+    @brands = Brand.all
     @cartitems = CartItem.all
     @cartitem = CartItem.new
   end

@@ -4,19 +4,36 @@
 	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
 	};	
 
-$(document).ready(function(){
-  $(document).on("change",".cart_quantity_input",function() {
-    var x= $(this).val();
-    debugger
-    if(x<0 || x>10)
-      {
-        alert("Product limit exceeded");
-      }
+function myFunction(cartId,product_id,min,max) {
+    var value = document.getElementById("quantity-update-"+cartId).value;
+    if( value == '' || value > max || value <= 0 )
+    {
+      alert("Quantity should be between "+min+" and "+max);
+    }
     else
-      {
-        alert($(this).val());
-      }
-  });
+    {
+      $.ajax({
+      url: "/cart_items/"+cartId,
+      type: "PUT",
+      data: {"product_id" : product_id,"quantity" :value},
+      dataType: "script"
+      });
+    }
+}
+
+$(document).ready(function(){
+  // $(document).on("change",".cart_quantity_input",function() {
+  //   var x= $(this).val();
+  //   debugger
+  //   if(x<0 || x>10)
+  //     {
+  //       alert("Product limit exceeded");
+  //     }
+  //   else
+  //     {
+  //       alert($(this).val());
+  //     }
+  // });
 
 	$(function () {
 		$.scrollUp({

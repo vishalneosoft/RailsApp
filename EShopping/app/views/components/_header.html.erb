@@ -53,7 +53,7 @@
               </li>
               <% if user_signed_in? %>  
                 <li>
-                  <%= link_to cart_items_path do%>
+                  <%= link_to cart_items_path, id: 'total-count' do%>
                     <i class="fa fa-shopping-cart"></i> Cart 
                     <% if current_user.cart_items.count>0 %>
                       (<%= current_user.cart_items.count %>)
