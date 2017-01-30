@@ -2407,6 +2407,7 @@ h2.title {
   border: 0 none;
   border-radius: 0;
   margin-top: 16px;
+  color: white;
 }
 
 .btn.btn-width {
@@ -2415,6 +2416,13 @@ h2.title {
   border-radius: 0;
   margin-top: 16px;
   width: 30%;
+  color: white;
+}
+
+.btn.btn-width:hover {
+  color: #000;
+  background-color: #ebebeb;
+  border-color: #adadad;
 }
 
 .blank-arrow {
@@ -2545,10 +2553,11 @@ h2.title {
   background-color: #FE980F;
   top: 50%;
   z-index: 1;
-  padding: 7px;
+  padding: 12px;
   border: 10px solid #fff;
-  margin: -10px 0 0 -155px;
+  margin: -10px 0 0 -160px;
   border-radius: 30px;
+  color: white;
 }
 
 .signin-other {
@@ -2590,6 +2599,7 @@ h2.title {
   border-bottom: solid 1px grey;
   display: inline;
   padding-bottom: 1px;
+  color: #FE980F;
 }
 
 .cart-image {

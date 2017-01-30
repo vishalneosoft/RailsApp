@@ -6,6 +6,15 @@ class CartItemsController < ApplicationController
   # GET /cart_items.json
   def index
     @cart_items = current_user.cart_items
+    @cart_total = 0
+    @cart_items.each do |item|
+      @cart_total += item.quantity * item.product.price
+    end
+    if @cart_total > 5000
+      @shipping_cost = 100.to_f
+    else
+      @shipping_cost = 0.to_f
+    end
   end
 
   # GET /cart_items/1
@@ -41,7 +50,7 @@ class CartItemsController < ApplicationController
         if @cart_item.save
           @product.quantity -= quantity 
           @product.save
-          @cart_items = current_user.cart_items.all
+          @cart_items = current_user.cart_items
           format.html { redirect_to :back, notice: 'Item added to cart successfully' }
           format.json { render :show, status: :created, location: @cart_item }
           format.js
@@ -83,6 +92,11 @@ class CartItemsController < ApplicationController
         @product.save
         current_user.cart_items.each do |item|
           @cart_total += item.quantity * item.product.price
+        end
+        if @cart_total > 5000
+          @shipping_cost = 100.to_f
+        else
+          @shipping_cost = 0.to_f
         end
         format.html { redirect_to :back, notice: 'Item successfully updated.' }
         format.json { render :show, status: :ok, location: @cart_item }

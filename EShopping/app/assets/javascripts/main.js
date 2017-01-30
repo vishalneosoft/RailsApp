@@ -4,8 +4,31 @@
 	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
 	};	
 
-function myFunction(cartId,product_id,min,max) {
-    var value = document.getElementById("quantity-update-"+cartId).value;
+// function myFunction(cartId,product_id,min,max) {
+//     var value = document.getElementById("quantity-update-"+cartId).value;
+//     if( value == '' || value > max || value <= 0 )
+//     {
+//       alert("Quantity should be between "+min+" and "+max);
+//     }
+//     else
+//     {
+//       $.ajax({
+//       url: "/cart_items/"+cartId,
+//       type: "PUT",
+//       data: {"product_id" : product_id,"quantity" :value},
+//       dataType: "script"
+//       });
+//     }
+// }
+
+$(document).ready(function(){
+  $(document).on("change",".cart_quantity_input",function() {
+    var value = parseInt($(this).val());
+    var min = $(this).attr('min');
+    var max = $(this).attr('max');
+    var productId = $(this).attr('product_id');
+    var id = $(this).attr('id');
+    var cartId = id.replace('quantity-update-','');
     if( value == '' || value > max || value <= 0 )
     {
       alert("Quantity should be between "+min+" and "+max);
@@ -15,26 +38,12 @@ function myFunction(cartId,product_id,min,max) {
       $.ajax({
       url: "/cart_items/"+cartId,
       type: "PUT",
-      data: {"product_id" : product_id,"quantity" :value},
+      data: {"product_id" :productId,"quantity" :value},
       dataType: "script"
       });
     }
-}
-
-$(document).ready(function(){
-  // $(document).on("change",".cart_quantity_input",function() {
-  //   var x= $(this).val();
-  //   debugger
-  //   if(x<0 || x>10)
-  //     {
-  //       alert("Product limit exceeded");
-  //     }
-  //   else
-  //     {
-  //       alert($(this).val());
-  //     }
-  // });
-
+  });
+   
 	$(function () {
 		$.scrollUp({
 	        scrollName: 'scrollUp', // Element ID

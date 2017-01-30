@@ -45,5 +45,5 @@
   <p><b>Available Quantity:</b> <%= @product.quantity%></p>
   <p><b>Condition:</b> New</p>
   <p><b>Brand:</b> <%= @product.brand.name.upcase%></p>
-  <p><b>Share on:</b><%= social_share_button_tag(@product.name) %></p>
+  <p><b>Share on:</b><%= social_share_button_tag(@product.name, :url => "http://www.myntra.com/men-tshirts?src=tNav#s:0") %></p>
 </div><!--/product-information-->
