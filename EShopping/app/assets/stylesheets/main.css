@@ -1826,7 +1826,7 @@ h2.title {
 .checkout-options h3 {
   color: #363432;
   font-size: 20px;
-  margin-bottom: 0;
+  margin-bottom: 1;
   font-weight: normal;
   font-family: 'Roboto', sans-serif;
 }
