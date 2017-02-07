@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201075536) do
+ActiveRecord::Schema.define(version: 20170207141326) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.integer  "pincode"
+    t.string   "phone"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "addresses", ["user_id"], name: "index_addresses_on_user_id"
 
   create_table "banners", force: :cascade do |t|
     t.string   "title"
@@ -61,6 +77,35 @@ ActiveRecord::Schema.define(version: 20170201075536) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.string   "amount"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id"
+  add_index "order_items", ["product_id"], name: "index_order_items_on_product_id"
+  add_index "order_items", ["user_id"], name: "index_order_items_on_user_id"
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "address_id"
+    t.string   "transaction_id"
+    t.string   "status"
+    t.string   "grand_total"
+    t.string   "shipping_charge"
+    t.integer  "payment_gateway_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "orders", ["address_id"], name: "index_orders_on_address_id"
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "pictures", force: :cascade do |t|
     t.string   "name"

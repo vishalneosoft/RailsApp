@@ -8,7 +8,6 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background:;
   position: relative;
   font-weight:400px;
 }
@@ -899,7 +898,6 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
-  opacity:;
 }
 
 .single-products:hover .product-overlay {
@@ -1796,7 +1794,7 @@ h2.title {
 }
 
 .check_out {
-  margin-left: 20px
+  margin-left: 40px
 }
 
 
@@ -1906,13 +1904,13 @@ h2.title {
 
 .form-two, .form-one {
   float: left;
-  width: 47%
 }
 
 
 .shopper-info > form > input, 
-.form-two > form > select, 
-.form-two > form > input, 
+.billing >  select,
+.form-one > form > select, 
+.billing >  input, 
 .form-one > form > input {
   background:#F0F0E9;
   border: 0 none;
@@ -2120,6 +2118,10 @@ h2.title {
 .pagination li .active {
   background:#FE980F;
   color: #fff
+}
+
+.address_para {
+  line-height: 10px;
 }
 
 
@@ -2420,6 +2422,49 @@ h2.title {
 }
 
 .btn.btn-width:hover {
+  color: #000;
+  background-color: #ebebeb;
+  border-color: #adadad;
+}
+
+.btn.btn-width1 {
+  background:#FE980F;
+  border: 0 none;
+  border-radius: 0;
+  margin-top: 16px;
+  width: 41%;
+  color: white;
+}
+
+.btn.btn-width1:hover {
+  color: #000;
+  background-color: #ebebeb;
+  border-color: #adadad;
+}
+
+.btn.btn-width2 {
+  background:#FE980F;
+  color: white;
+}
+
+.btn.btn-width2:hover {
+  color: #000;
+  background-color: #ebebeb;
+  border-color: #adadad;
+}
+
+.btn.btn-width3 {
+  background:#FE980F;
+  border: 0 none;
+  border-radius: 0;
+  margin-top: 6px;
+  width: 30%;
+  height: 40px;
+  color: white;
+}
+
+
+.btn.btn-width3:hover {
   color: #000;
   background-color: #ebebeb;
   border-color: #adadad;

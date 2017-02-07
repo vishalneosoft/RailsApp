@@ -1,0 +1,23 @@
+<% if @order.status == 'success' %>
+  <section id="cart_items">
+    <div class="container">
+      <div class="cart_info">
+        <h2 style="text-align: center;">Thank-You</h2>
+        <p style="text-align: center;">Your Order with order-id: <%= @order.id %> is <b
+        >Complete</b>, you paid <b>&#8377; <%= @order.grand_total %></b></p>
+        <h4 style="text-align: center;"><%= link_to 'Continue Shopping', root_path, class: 'btn btn-width2' %></h4>
+        <h4 style="text-align: center;"><%= link_to 'Cancel Order', cancel_order_order_path(@order), class: 'btn btn-width2' %></h4>
+      </div>
+    </div>
+  </section>
+<% else %>
+  <section id="cart_items">
+    <div class="container">
+      <div class="cart_info">
+        <h2 style="text-align: center;">Thank-You</h2>
+        <p style="text-align: center;">Your Order with order-id: <%= @order.id %> has been <b>Cancelled</b></p>
+        <h4 style="text-align: center;"><%= link_to 'Continue Shopping', root_path, class: 'btn btn-width2' %></h4>
+      </div>
+    </div>
+  </section>
+<% end %>
