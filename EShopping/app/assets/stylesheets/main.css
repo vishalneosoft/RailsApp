@@ -2651,3 +2651,11 @@ h2.title {
   height: 140px;
   width: 130px;
 }
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}

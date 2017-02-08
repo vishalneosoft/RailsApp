@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :categories do 
     resources :brands
   end
+  resources :brands
   resources :products
   resources :orders do 
     member do

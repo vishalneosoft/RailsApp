@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
   before_action :cart_total, only: [:create]
 
   def new
@@ -10,6 +11,8 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @address = @order.address
+    @orderitems = @order.order_items
   end
 
   def create
@@ -44,15 +47,20 @@ class OrdersController < ApplicationController
       :currency    => 'inr'
     )
     if params[:stripeToken].present?
-      @order = @order.update(status: 'success',transaction_id: params[:stripeToken])
+      @order.update(status: 'success',transaction_id: params[:stripeToken])
     end
     @cart_items = current_user.cart_items
     @cart_items.each do |cart_item|
+      @product = Product.find(cart_item.product_id)
+      @product.quantity -= cart_item.quantity
+      @product.save
       @order_item = OrderItem.new(order_id: params[:id],product_id: cart_item.product_id,quantity: cart_item.quantity,
         user_id: current_user.id,amount: (cart_item.product.price*cart_item.quantity))
       @order_item.save
     end
     @cart_items.destroy_all
+    @address = @order.address
+    OrderMailer.order_email(current_user,@order,@address).deliver_now
     redirect_to order_path(params[:id])
 
   rescue Stripe::CardError => e
@@ -63,6 +71,12 @@ class OrdersController < ApplicationController
   def cancel_order
     @order = Order.find(params[:id])
     @order.update(status: 'cancel')
+    @orderitems = @order.order_items
+    @orderitems.each do |order_item|
+      @product = Product.find(order_item.product_id)
+      @product.quantity += order_item.quantity
+      @product.save
+    end
     redirect_to order_path(params[:id])
   end
 
