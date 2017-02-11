@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209112607) do
+ActiveRecord::Schema.define(version: 20170211094929) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "name"
@@ -166,5 +166,16 @@ ActiveRecord::Schema.define(version: 20170209112607) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "wish_lists", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "quantity",   default: 1
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "wish_lists", ["product_id"], name: "index_wish_lists_on_product_id"
+  add_index "wish_lists", ["user_id"], name: "index_wish_lists_on_user_id"
 
 end
