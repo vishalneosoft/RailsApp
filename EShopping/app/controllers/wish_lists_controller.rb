@@ -1,5 +1,6 @@
 class WishListsController < ApplicationController
-  before_action :set_wish_list, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_wish_list, only: [:show, :edit, :update]
 
   # GET /wish_lists
   # GET /wish_lists.json
@@ -24,11 +25,11 @@ class WishListsController < ApplicationController
   # POST /wish_lists
   # POST /wish_lists.json
   def create
-    @wish_list = WishList.new(wish_list_params)
+    @wish_list = WishList.new(product_id: params[:product_id],user_id: current_user.id)
 
     respond_to do |format|
       if @wish_list.save
-        format.html { redirect_to @wish_list, notice: 'Wish list was successfully created.' }
+        format.html { redirect_to :back, notice: 'Added to Wish list.' }
         format.json { render :show, status: :created, location: @wish_list }
       else
         format.html { render :new }
@@ -54,9 +55,10 @@ class WishListsController < ApplicationController
   # DELETE /wish_lists/1
   # DELETE /wish_lists/1.json
   def destroy
+    @wish_list = WishList.find_by(product_id: params[:id])
     @wish_list.destroy
     respond_to do |format|
-      format.html { redirect_to wish_lists_url, notice: 'Wish list was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Product removed from wishlist successfully' }
       format.json { head :no_content }
     end
   end

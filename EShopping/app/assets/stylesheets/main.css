@@ -2659,3 +2659,9 @@ h2.title {
 .table > thead > tr > .no-line {
     border-bottom: none;
 }
+
+.font-awesome-size {
+  margin-left: 140px;
+  margin-top: 10px;
+  font-size: 20px;
+}
