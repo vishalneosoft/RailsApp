@@ -30,6 +30,10 @@
         </span>
       <% end %>
     <% end %>
+    <div id='wishlist-product-<%= @product.id %>'>
+      <%= render 'products/product_wishlist' %>
+    </div>
+    <hr>
   <% else %>
     <%= image_tag "product-details/rating.png" %>
     <span>
@@ -42,7 +46,7 @@
       <% end %>
     </span>
     <%= link_to wish_lists_path(product_id: @product.id), method: :post, style: 'color: black', title: 'Add to Wishlist' do %>
-      <i class="fa fa-heart-o font-awesome-size-show"> Add to Wishlist</i>
+      <i class="fa fa-heart-o font-awesome-size-show"> Save to Wishlist</i>
     <% end %>
     <hr>
   <% end %>
