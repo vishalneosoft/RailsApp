@@ -50,7 +50,7 @@
               <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
               <% if user_signed_in? %>
                 <li>
-                  <%= link_to wish_lists_path do%>
+                  <%= link_to wish_lists_path, id: 'wishlist-count' do%>
                     <i class="fa fa-heart"></i> Wishlist
                     <% if current_user.wish_lists.count>0 %>
                       (<%= current_user.wish_lists.count %>)

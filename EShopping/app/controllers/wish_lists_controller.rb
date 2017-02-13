@@ -26,11 +26,14 @@ class WishListsController < ApplicationController
   # POST /wish_lists.json
   def create
     @wish_list = WishList.new(product_id: params[:product_id],user_id: current_user.id)
-
+    @product = Product.find(params[:product_id])
     respond_to do |format|
       if @wish_list.save
+        @wish_lists = current_user.wish_lists
+        @wishlistcreatemsg = 'Added to Wish list.'
         format.html { redirect_to :back, notice: 'Added to Wish list.' }
         format.json { render :show, status: :created, location: @wish_list }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @wish_list.errors, status: :unprocessable_entity }
@@ -56,10 +59,14 @@ class WishListsController < ApplicationController
   # DELETE /wish_lists/1.json
   def destroy
     @wish_list = WishList.find_by(product_id: params[:id])
+    @product = Product.find(params[:id])
     @wish_list.destroy
+    @wish_lists = current_user.wish_lists
+    @wishlistdeletemsg = 'Product removed from wishlist successfully'
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Product removed from wishlist successfully' }
       format.json { head :no_content }
+      format.js
     end
   end
 

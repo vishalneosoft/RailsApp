@@ -1,11 +1,17 @@
 <div class="productinfo text-center">
-  <% unless current_user.wish_lists.pluck(:product_id).include?(product.id) %>
-    <%= link_to wish_lists_path(product_id: product.id), method: :post, style: 'color: black', title: 'Add to Wishlist' do %>
-      <i class="fa fa-heart-o font-awesome-size"></i>
+  <% if user_signed_in? %>
+    <% unless current_user.wish_lists.pluck(:product_id).include?(product.id) %>
+      <%= link_to wish_lists_path(product_id: product.id), method: :post, style: 'color: black', title: 'Add to Wishlist', remote: true do %>
+        <i class="fa fa-heart-o font-awesome-size"></i>
+      <% end %>
+    <% else %>
+      <%= link_to wish_list_path(id: product.id),id: 'delete-wishlist-#{product_id}', :method => :delete, remote: true do %>
+        <i class="fa fa-heart font-awesome-size" style="color: red"></i>
+      <% end %>
     <% end %>
   <% else %>
-    <%= link_to wish_list_path(id: product.id), :method => :delete do %>
-      <i class="fa fa-heart font-awesome-size" style="color: red"></i>
+    <%= link_to wish_lists_path(product_id: product.id), method: :post, style: 'color: black', title: 'Add to Wishlist' do %>
+      <i class="fa fa-heart-o font-awesome-size"></i>
     <% end %>
   <% end %>
   <%= link_to product_path(product) do %>
