@@ -97,11 +97,18 @@ class OrdersController < ApplicationController
   private
 
   def cart_total
+    @coupon = Coupon.find_by(code: session[:coupon_applied])
     @cart_items = current_user.cart_items
-    @cart_total = 0
+    @sub_total = 0
     @cart_items.each do |item|
-      @cart_total += item.quantity * item.product.price
+      @sub_total += item.quantity * item.product.price
     end
+    if @coupon.present?
+        @discount = (@sub_total * @coupon.percent.to_i)/100
+    else
+      @discount = 0
+    end
+    @cart_total = @sub_total - @discount
     if @cart_total < 5000
       @shipping_cost = 50.to_f
     else

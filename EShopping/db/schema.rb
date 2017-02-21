@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217124258) do
+ActiveRecord::Schema.define(version: 20170220121708) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "name"
@@ -85,6 +85,26 @@ ActiveRecord::Schema.define(version: 20170217124258) do
     t.string   "subject"
     t.text     "message"
     t.text     "reply"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "coupon_useds", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "order_id"
+    t.integer  "coupon_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "coupon_useds", ["coupon_id"], name: "index_coupon_useds_on_coupon_id"
+  add_index "coupon_useds", ["order_id"], name: "index_coupon_useds_on_order_id"
+  add_index "coupon_useds", ["user_id"], name: "index_coupon_useds_on_user_id"
+
+  create_table "coupons", force: :cascade do |t|
+    t.string   "code"
+    t.string   "percent"
+    t.string   "no_of_uses"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

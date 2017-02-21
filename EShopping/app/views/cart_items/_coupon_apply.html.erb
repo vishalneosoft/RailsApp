@@ -1,0 +1,20 @@
+<div class="chose_area">
+  <% if !session[:coupon_applied].present? %>
+    <ul class="user_option">
+      <li class="single_field zip-field">
+        <p>Use Coupon</p>
+        <%= text_field_tag :coupon, '', class: 'coupon_no', id: 'coupon_used' %>
+        <div id="invalid_coupon_msg"></div>
+      </li>
+    </ul>
+    <%= button_tag 'Apply Coupon', class: 'btn btn-default update', onclick: "coupon_value()" %>
+  <% else %>
+    <ul class="user_option">
+      <li class="single_field zip-field">
+        <p>Coupon Applied Successfully</p>
+        <%= text_field_tag :coupon, "#{session[:coupon_applied]}", class: 'coupon_no',disabled: true, id: 'coupon_used' %>
+        <%= link_to 'Remove Coupon', remove_coupon_path, class: 'btn btn-default', remote: true %>
+      </li>
+    </ul>
+  <% end %>
+</div>

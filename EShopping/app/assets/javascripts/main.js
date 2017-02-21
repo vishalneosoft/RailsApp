@@ -25,6 +25,17 @@ function show_image(avatar_url)
     $("#image_show").attr("src", avatar_url)
   }
 
+function coupon_value()
+  {
+    coupon = $("#coupon_used").val();
+    $.ajax({
+      url: "/cart_items",
+      type: "GET",
+      data: { "coupon" :coupon },
+      dataType: "script"
+      });
+  }
+
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
 });
