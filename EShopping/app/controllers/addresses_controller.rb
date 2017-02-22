@@ -36,8 +36,7 @@ class AddressesController < ApplicationController
         @address.update(status: 'inactive')
         format.html { redirect_to :back, notice: 'Address was successfully destroyed.' }
         format.json { render :back, status: :ok, location: @address }
-      elsif
-        @address.update(address_params)
+      elsif @address.update(address_params)
         format.html { redirect_to :back, notice: 'Address was successfully updated.' }
         format.json { render :back, status: :ok, location: @address }
       else

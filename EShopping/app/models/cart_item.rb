@@ -2,8 +2,8 @@ class CartItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :product
 
-  def self.calculate_total(cart_items,discount)
-    @coupon = Coupon.find_by(code: discount)
+  def self.calculate_total(cart_items,coupon)
+    @coupon = Coupon.find_by(code: coupon)
     sub_total = 0
     cart_items.each do |item|
       sub_total += item.quantity * item.product.price

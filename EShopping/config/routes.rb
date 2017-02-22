@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'review_payment', to: 'check_outs#review_payment'
   resources :cart_items
   get 'remove_coupon', to: 'cart_items#remove_coupon'
+  get 'apply_coupon', to: 'cart_items#apply_coupon' 
   resources :categories do 
     resources :brands
   end

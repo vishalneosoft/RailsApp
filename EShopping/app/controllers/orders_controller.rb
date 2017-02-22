@@ -68,6 +68,10 @@ class OrdersController < ApplicationController
         user_id: current_user.id,amount: (cart_item.product.price*cart_item.quantity))
       @order_item.save
     end
+    @coupon = Coupon.find_by(code: session[:coupon_applied])
+    @coupon_used = UsedCoupon.new(user_id: current_user.id,order_id: params[:id],coupon_id: @coupon.id)
+    @coupon_used.save
+    session[:coupon_applied] = nil
     @cart_items.destroy_all
     @address = @order.address
     OrderMailer.order_email(current_user,@order,@address).deliver_now

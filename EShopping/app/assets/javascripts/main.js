@@ -29,7 +29,7 @@ function coupon_value()
   {
     coupon = $("#coupon_used").val();
     $.ajax({
-      url: "/cart_items",
+      url: "/apply_coupon",
       type: "GET",
       data: { "coupon" :coupon },
       dataType: "script"

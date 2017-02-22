@@ -5,13 +5,7 @@ class CartItemsController < ApplicationController
 
   # GET /cart_items
   # GET /cart_items.json
-  def index
-    @coupon = Coupon.find_by(code: params[:coupon])
-    if @coupon.present?
-      session[:coupon_applied] = params[:coupon]
-    else
-      @invalid_coupon_msg = 'Invalid Coupon!..'
-    end
+  def index    
   end
 
   # GET /cart_items/1
@@ -88,6 +82,21 @@ class CartItemsController < ApplicationController
     end
   end
 
+  def apply_coupon
+    @coupon = Coupon.find_by(code: params[:coupon])
+    if @coupon.present?
+      @coupon_used = UsedCoupon.find_by(user_id: current_user.id,coupon_id: @coupon.id)
+      if @coupon_used.present?
+        @coupon_msg = 'Coupon already used!..'
+      else
+        session[:coupon_applied] = params[:coupon]
+      end
+    else
+      @coupon_msg = 'Invalid Coupon!..'
+    end
+    cart_sum
+  end
+
   def remove_coupon
     if session[:coupon_applied].present?
       session[:coupon_applied] = nil
@@ -114,7 +123,7 @@ class CartItemsController < ApplicationController
 
     def cart_sum
       @cart_items = current_user.cart_items
-      cart_value = CartItem.calculate_total(@cart_items,session[:coupon_applied] || params[:coupon])
+      cart_value = CartItem.calculate_total(@cart_items, session[:coupon_applied])
       @cart_total = cart_value[0]
       @shipping_cost = cart_value[1]
       @discount = cart_value[2]
