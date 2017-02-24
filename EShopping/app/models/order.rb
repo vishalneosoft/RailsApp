@@ -7,6 +7,8 @@ class Order < ActiveRecord::Base
   has_one :used_coupon
   after_update :track_order_list
 
+  scope :month, -> { Order.all.group_by{ |order| order.created_at.strftime('%B') } }
+
   def track_order_list
     self.track_orders.create(status: status)
   end

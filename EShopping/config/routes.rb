@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
+  get 'reports/sales_report'
+
+  get 'reports/customer_register'
+
+  get 'reports/coupon_used'
+
   resources :contacts, only: [ :index, :edit, :create, :update]
   resources :wish_lists, only: [ :index, :create, :destroy]
-  resources :addresses, except: [ :show, :new, :destroy]
+  resources :addresses, except: [ :show, :destroy]
   resources :check_outs, only: [ :index]
   get 'review_payment', to: 'check_outs#review_payment'
   resources :cart_items, except: [ :show, :new, :edit]

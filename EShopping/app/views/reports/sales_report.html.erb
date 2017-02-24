@@ -1,0 +1,85 @@
+<div>
+  <div id="sales_report"></div>
+  <script type="text/javascript">
+  Highcharts.chart('sales_report', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Browser market shares. January, 2015 to May, 2015'
+      },
+      subtitle: {
+          text: 'Click the columns to view versions. Source: <a href="http://netmarketshare.com">netmarketshare.com</a>.'
+      },
+      xAxis: {
+          type: 'category'
+      },
+      yAxis: {
+          title: {
+              text: 'Total percent market share'
+          }
+
+      },
+      legend: {
+          enabled: false
+      },
+      plotOptions: {
+          series: {
+              borderWidth: 0,
+              dataLabels: {
+                  enabled: true,
+                  format: '{point.y:.1f}%'
+              }
+          }
+      },
+
+      tooltip: {
+          headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+          pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+      },
+
+      series: [{
+          name: 'Brands',
+          colorByPoint: true,
+          data: [{
+              name: 'January',
+              y: 56.33,
+          }, {
+              name: 'February',
+              y: 24.03,
+          }, {
+              name: 'March',
+              y: 10.38,
+          }, {
+              name: 'April',
+              y: 4.77,
+          }, {
+              name: 'May',
+              y: 0.91,
+          }, {
+              name: 'June',
+              y: 0.2,
+          }, {
+              name: 'July',
+              y: 0.2,
+          }, {
+              name: 'August',
+              y: 0.2,
+          }, {
+              name: 'September',
+              y: 0.2,
+          }, {
+              name: 'October',
+              y: 0.2,
+          }, {
+              name: 'November',
+              y: 0.2,
+          }, {
+              name: 'December',
+              y: 0.2,
+          }
+          ]
+      }],
+  });
+  </script>
+</div>

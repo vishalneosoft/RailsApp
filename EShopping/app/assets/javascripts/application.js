@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require social-share-button
+//= require highcharts
+//= require data
+//= require drilldown
 //= require_tree .
